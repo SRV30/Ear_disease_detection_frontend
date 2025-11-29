@@ -12,6 +12,11 @@ export default function Result() {
 
   const result = location.state?.result;
 
+  const backendURL =
+    window.location.hostname === "localhost"
+      ? "http://127.0.0.1:5000"
+      : "https://ear-disease-detection-backend.onrender.com";
+
   const getRemedyText = () => {
     if (!result) return "";
     const label = result.label.toLowerCase();
@@ -53,8 +58,7 @@ export default function Result() {
           No Result Available
         </h2>
         <p className="text-sm text-slate-600 mb-4">
-          Please upload an ear image from the Diagnose page to see the
-          analysis report.
+          Please upload an ear image from the Diagnose page to see the analysis report.
         </p>
         <button
           onClick={() => navigate("/diagnose")}
@@ -89,15 +93,14 @@ export default function Result() {
           </button>
         </div>
         <p className="text-xs text-slate-500 mb-4">
-          This report is generated using an AI model and is not a
-          substitute for a clinical diagnosis. Please consult a qualified
-          ENT specialist.
+          This report is generated using an AI model and is not a substitute for a clinical diagnosis. Please consult a qualified ENT specialist.
         </p>
 
         <ResultCard
           result={result}
           remedyText={getRemedyText()}
           pdfRef={pdfRef}
+          backendURL={backendURL}
         />
       </section>
     </>

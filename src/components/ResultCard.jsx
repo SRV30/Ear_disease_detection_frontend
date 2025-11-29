@@ -18,7 +18,7 @@ ChartJS.register(
   Legend
 );
 
-export default function ResultCard({ result, remedyText, pdfRef }) {
+export default function ResultCard({ result, remedyText, pdfRef, backendURL }) {
   const labelColor =
     result.label.toLowerCase() === "normal"
       ? "bg-green-600"
@@ -49,11 +49,12 @@ export default function ResultCard({ result, remedyText, pdfRef }) {
           {result.label}
         </span>
         <p className="mt-2 text-gray-700 font-medium">
-          Confidence: <span className="text-indigo-700">{result.confidence}%</span>
+          Confidence:{" "}
+          <span className="text-indigo-700">{result.confidence}%</span>
         </p>
       </div>
 
-      {/* Gradient Divider */}
+      {/* Divider */}
       <div className="h-[2px] w-full bg-gradient-to-r from-indigo-600 via-blue-500 to-indigo-600 opacity-60 rounded-full" />
 
       {/* Images */}
@@ -61,7 +62,7 @@ export default function ResultCard({ result, remedyText, pdfRef }) {
         <div className="text-center space-y-2">
           <p className="text-xs text-gray-500">Original Image</p>
           <img
-            src={`http://127.0.0.1:5000${result.image_url}`}
+            src={`${backendURL}${result.image_url}`}
             className="w-56 h-56 rounded-2xl border shadow object-cover mx-auto"
             alt="original"
           />
@@ -70,7 +71,7 @@ export default function ResultCard({ result, remedyText, pdfRef }) {
         <div className="text-center space-y-2">
           <p className="text-xs text-gray-500">Grad-CAM (Model Focus)</p>
           <img
-            src={`http://127.0.0.1:5000${result.heatmap_url}`}
+            src={`${backendURL}${result.heatmap_url}`}
             className="w-56 h-56 rounded-2xl border shadow object-cover mx-auto"
             alt="heatmap"
           />
@@ -86,14 +87,14 @@ export default function ResultCard({ result, remedyText, pdfRef }) {
             {
               data: result.probabilities,
               backgroundColor: ["#4F46E5", "#F59E0B", "#EF4444"],
-              borderRadius: 8,
-            },
-          ],
+              borderRadius: 8
+            }
+          ]
         }}
         options={{
           plugins: { legend: { display: false } },
           scales: { y: { beginAtZero: true, max: 100 } },
-          responsive: true,
+          responsive: true
         }}
       />
 
@@ -120,6 +121,7 @@ export default function ResultCard({ result, remedyText, pdfRef }) {
         </span>
       </div>
 
+      {/* Fade Animation */}
       <style>
         {`
           .animate-fadeIn {

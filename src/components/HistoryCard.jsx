@@ -1,4 +1,4 @@
-export default function HistoryCard({ history }) {
+export default function HistoryCard({ history, backendURL }) {
   return (
     <div className="mt-12">
       <h2 className="text-2xl font-bold text-slate-900 mb-3">
@@ -26,7 +26,7 @@ export default function HistoryCard({ history }) {
               className="flex items-center gap-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl p-3 transition-all shadow-sm"
             >
               <img
-                src={`http://127.0.0.1:5000${item.image_url}`}
+                src={`${backendURL}${item.image_url}`}
                 className="w-14 h-14 rounded-lg object-cover border"
                 alt="history"
               />
@@ -42,8 +42,7 @@ export default function HistoryCard({ history }) {
                           : item.label.toLowerCase() === "wax"
                           ? "bg-yellow-500"
                           : "bg-red-600"
-                      }
-                    `}
+                      }`}
                   >
                     {item.confidence}% confidence
                   </span>
@@ -55,9 +54,7 @@ export default function HistoryCard({ history }) {
                 href="/result"
                 onClick={(e) => {
                   e.preventDefault();
-                  window.location.assign(
-                    `/result?auto=result_${idx}` // optional navigation logic
-                  );
+                  window.location.assign(`/result?auto=result_${idx}`);
                 }}
                 className="text-xs font-semibold text-indigo-600 hover:text-indigo-800"
               >
@@ -68,7 +65,6 @@ export default function HistoryCard({ history }) {
         </div>
       )}
 
-      {/* Scrollbar Styling */}
       <style>
         {`
           .custom-scroll::-webkit-scrollbar {

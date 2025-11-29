@@ -1,11 +1,11 @@
 import { Helmet } from "react-helmet";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UploadBox from "../components/UploadBox";
 import CameraCapture from "../components/CameraCapture";
 import HistoryCard from "../components/HistoryCard";
 import Hospitals from "../components/Hospitals";
+import api from "../utils/axiosClient";
 
 export default function Diagnose() {
   const [file, setFile] = useState(null);
@@ -49,9 +49,7 @@ export default function Diagnose() {
       setLoading(true);
       const fd = new FormData();
       fd.append("file", file);
-      const res = await axios.post("http://127.0.0.1:5000/predict", fd, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await api.post("/predict", fd);
 
       const result = res.data;
       const entry = { ...result, time: new Date().toLocaleString() };
@@ -89,8 +87,9 @@ export default function Diagnose() {
             AI-Powered Ear Disease Diagnosis
           </h2>
           <p className="text-sm md:text-base text-slate-600 max-w-xl mx-auto">
-            Upload or capture an otoscopic image. Our deep learning model will analyze
-            your ear condition and generate a medical-grade report in seconds.
+            Upload or capture an otoscopic image. Our deep learning model will
+            analyze your ear condition and generate a medical-grade report in
+            seconds.
           </p>
         </div>
 
